@@ -78,6 +78,7 @@
                         <div>
                             <div wire:ignore>
                                 <x-bootstrap.form.select name="product" class="sumoselect" label="Product">
+                                    <option value="" disabled selected>Bitte auswählen</option>
                                     @foreach ($products as $singleProduct)
                                         <option value="{{ $singleProduct->id }}">{{ $singleProduct->name }}</option>
                                     @endforeach
@@ -109,9 +110,7 @@
         </div>
     </div>
 
-    @if ($mode == PageModeEnum::EDIT)
-        @livewire('users.org.modal.create.contact')
-    @endif
+    @livewire('users.org.modal.create.contact')
 
 
     <x-bootstrap.card>
@@ -231,11 +230,7 @@
                             <p class="text-danger small">{{ $message }}</p>
                         @enderror
 
-                        @if ($mode == PageModeEnum::EDIT)
-                        <p>Wenn der Kontakt nicht vorhanden ist, hier einen neuen erstellen</p>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#create_contact_modal">Kontakt erstellen</button>
-                        @endif
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_contact_modal">Kontakt erstellen</button>
 
                         @if ($facility)
                             <div class="mt-2">

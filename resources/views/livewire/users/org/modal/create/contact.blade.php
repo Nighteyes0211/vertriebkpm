@@ -30,6 +30,7 @@
                         <x-bootstrap.form.input name="location" label="Ort" />
 
                         <x-bootstrap.form.select name="position" label="Position">
+                            <option value="" disabled selected>Bitte auswählen</option>
                             @foreach ($positions as $singlePosition)
                                 <option value="{{ $singlePosition->id }}">{{ $singlePosition->name }}</option>
                             @endforeach

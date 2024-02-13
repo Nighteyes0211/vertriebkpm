@@ -43,7 +43,7 @@ class Contact extends Component
 
         $this->status = StatusEnum::PENDING->value;
         $this->assign_to = auth()->user()->id;
-        $this->position = $this->positions->first()?->id;
+        $this->position = "";
         $this->salutation = SalutationEnum::NONE->value;
         $this->fillInputs();
     }
@@ -68,6 +68,7 @@ class Contact extends Component
             'location' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
+            'position' => 'required', // Ensure the assigned position exists in the positions table
         ];
 
         $this->validate(
