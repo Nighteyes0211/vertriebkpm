@@ -13,7 +13,7 @@
                 @else
                     <div class="d-flex gap-3">
                         <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#facility_modal">Add Product</button>
+                        data-bs-target="#facility_modal">Produkt hinzufügen</button>
                         @livewire('users.org.modal.create.appointment')
                     </div>
                 @endif

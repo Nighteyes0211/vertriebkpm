@@ -2,7 +2,7 @@
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Appointment</x-dayone.page.title>
+            <x-dayone.page.title>Termin</x-dayone.page.title>
         </x-slot>
 
     </x-dayone.page.header>

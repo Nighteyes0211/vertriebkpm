@@ -213,6 +213,9 @@
             </div>
             <hr />
             <div>
+                <div>
+                    <p>Kontakt zur Einrichtung hinzufügen</p>
+                </div>
                 <div wire:ignore>
                     <x-bootstrap.form.select name="contact"  label="Kontakt" multiple>
                         @foreach ($contacts as $singleContact)
@@ -229,6 +232,7 @@
                         @enderror
 
                         @if ($mode == PageModeEnum::EDIT)
+                        <p>Wenn der Kontakt nicht vorhanden ist, hier einen neuen erstellen</p>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#create_contact_modal">Kontakt erstellen</button>
                         @endif
