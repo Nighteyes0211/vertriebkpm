@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "league/csv": "^9.14",
         "livewire/livewire": "2.12.6",
+        "phpoffice/phpspreadsheet": "^2.0",
         "rappasoft/laravel-livewire-tables": "^2.15",
         "spatie/laravel-permission": "*"
     },

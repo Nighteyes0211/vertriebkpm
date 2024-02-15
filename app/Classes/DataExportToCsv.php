@@ -9,7 +9,8 @@ use App\Models\FacilityType;
 use App\Models\Facilty;
 use App\Models\Product;
 use League\Csv\Writer;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class DataExportToCsv {
 
@@ -41,33 +42,35 @@ class DataExportToCsv {
             return $facility;
         });
 
-        // Create a CSV file
-        $name = 'facility_' . now()->format('YmdHis');
-        $csvFileName = $name . '.csv';
-        $csvPath = storage_path('app/exports/' . $csvFileName);
 
-        // Open the CSV file for writing
-        $file = fopen($csvPath, 'w');
+        // Create a new Spreadsheet
+        $spreadsheet = new Spreadsheet();
 
-        // Write headers to the CSV file
-        fputcsv($file, array_keys($facilities->first()->toArray()));
+        // Set the column headers
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($facilities->first()->toArray()), null, 'A1');
 
-        foreach ($facilities as $record) {
-            fputcsv($file, $record->toArray());
-        }
+        // Set the data starting from the second row
+        $spreadsheet->getActiveSheet()->fromArray($facilities->toArray(), null, 'A2');
 
-        // Close the file
-        fclose($file);
+        // Create a writer
+        $writer = new Xls($spreadsheet);
+
+
+        // Save the file
+        $name = 'facility_' . now()->format('YmdHis') . '.xls';
+        $xlsPath = storage_path('app/exports/' . $name);
+        $writer->save($xlsPath);
+
 
         ExportFile::create([
-            'path' => 'app/exports/' . $csvFileName,
+            'path' => 'app/exports/' . $name,
             'name' => $name,
         ]);
 
 
         return [
-            'path' => $csvPath,
-            'file_name' => $csvFileName
+            'path' => $xlsPath,
+            'file_name' => $name
         ];
     }
 
@@ -93,33 +96,32 @@ class DataExportToCsv {
             return $contact;
         });
 
+        // Create a new Spreadsheet
+        $spreadsheet = new Spreadsheet();
+
+        // Set the column headers
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($contacts->first()->toArray()), null, 'A1');
+
+        // Set the data starting from the second row
+        $spreadsheet->getActiveSheet()->fromArray($contacts->toArray(), null, 'A2');
+
+        // Create a writer
+        $writer = new Xls($spreadsheet);
+
         // Create a CSV file
-        $name = 'contact_' . now()->format('YmdHis');
-        $csvFileName = $name . '.csv';
-        $csvPath = storage_path('app/exports/' . $csvFileName);
-
-        // Open the CSV file for writing
-        $file = fopen($csvPath, 'w');
-
-        // Write headers to the CSV file
-        fputcsv($file, array_keys($contacts->first()->toArray()));
-
-        foreach ($contacts as $record) {
-            fputcsv($file, $record->toArray());
-        }
-
-        // Close the file
-        fclose($file);
+        $name = 'contact_' . now()->format('YmdHis') . '.xls';
+        $xlsPath = storage_path('app/exports/' . $name);
+        $writer->save($xlsPath);
 
         ExportFile::create([
-            'path' => 'app/exports/' . $csvFileName,
+            'path' => 'app/exports/' . $name,
             'name' => $name,
         ]);
 
 
         return [
-            'path' => $csvPath,
-            'file_name' => $csvFileName
+            'path' => $xlsPath,
+            'file_name' => $name
         ];
     }
 
@@ -141,33 +143,32 @@ class DataExportToCsv {
             return $product;
         });
 
+        // Create a new Spreadsheet
+        $spreadsheet = new Spreadsheet();
+
+        // Set the column headers
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($products->first()->toArray()), null, 'A1');
+
+        // Set the data starting from the second row
+        $spreadsheet->getActiveSheet()->fromArray($products->toArray(), null, 'A2');
+
+        // Create a writer
+        $writer = new Xls($spreadsheet);
+
         // Create a CSV file
-        $name = 'product_' . now()->format('YmdHis');
-        $csvFileName = $name . '.csv';
-        $csvPath = storage_path('app/exports/' . $csvFileName);
-
-        // Open the CSV file for writing
-        $file = fopen($csvPath, 'w');
-
-        // Write headers to the CSV file
-        fputcsv($file, array_keys($products->first()->toArray()));
-
-        foreach ($products as $record) {
-            fputcsv($file, $record->toArray());
-        }
-
-        // Close the file
-        fclose($file);
+        $name = 'product_' . now()->format('YmdHis') . '.xls';
+        $xlsPath = storage_path('app/exports/' . $name);
+        $writer->save($xlsPath);
 
         ExportFile::create([
-            'path' => 'app/exports/' . $csvFileName,
+            'path' => 'app/exports/' . $name,
             'name' => $name,
         ]);
 
 
         return [
-            'path' => $csvPath,
-            'file_name' => $csvFileName
+            'path' => $xlsPath,
+            'file_name' => $name
         ];
     }
 
@@ -189,33 +190,32 @@ class DataExportToCsv {
             return $appointment;
         });
 
+        // Create a new Spreadsheet
+        $spreadsheet = new Spreadsheet();
+
+        // Set the column headers
+        $spreadsheet->getActiveSheet()->fromArray(array_keys($appointments->first()->toArray()), null, 'A1');
+
+        // Set the data starting from the second row
+        $spreadsheet->getActiveSheet()->fromArray($appointments->toArray(), null, 'A2');
+
+        // Create a writer
+        $writer = new Xls($spreadsheet);
+
         // Create a CSV file
-        $name = 'appointment_' . now()->format('YmdHis');
-        $csvFileName = $name . '.csv';
-        $csvPath = storage_path('app/exports/' . $csvFileName);
-
-        // Open the CSV file for writing
-        $file = fopen($csvPath, 'w');
-
-        // Write headers to the CSV file
-        fputcsv($file, array_keys($appointments->first()->toArray()));
-
-        foreach ($appointments as $record) {
-            fputcsv($file, $record->toArray());
-        }
-
-        // Close the file
-        fclose($file);
+        $name = 'appointment_' . now()->format('YmdHis') . '.xls';
+        $xlsPath = storage_path('app/exports/' . $name);
+        $writer->save($xlsPath);
 
         ExportFile::create([
-            'path' => 'app/exports/' . $csvFileName,
+            'path' => 'app/exports/' . $name,
             'name' => $name,
         ]);
 
 
         return [
-            'path' => $csvPath,
-            'file_name' => $csvFileName
+            'path' => $xlsPath,
+            'file_name' => $name
         ];
     }
 
