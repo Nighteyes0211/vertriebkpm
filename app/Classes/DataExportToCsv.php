@@ -47,7 +47,28 @@ class DataExportToCsv {
         $spreadsheet = new Spreadsheet();
 
         // Set the column headers
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($facilities->first()->toArray()), null, 'A1');
+        $spreadsheet->getActiveSheet()->fromArray(
+            [
+                'Einrichtungsname',
+                'Telefon',
+                'Straße',
+                'Hausnummer',
+                'Postleitzahl',
+                'Ort',
+                'Telefontermin',
+                'info_material',
+                'Wurde gelöscht',
+                'Gelöscht am',
+                'Erstellt am',
+                'Update am',
+                'Intern',
+                'E-Mail Adresse',
+                'Einrichtungstyp',
+                'Bundesland',
+                'Einrichtungsstatus',
+                'Mutterkonzern/Träger',
+            ]
+            , null, 'A1');
 
         // Set the data starting from the second row
         $spreadsheet->getActiveSheet()->fromArray($facilities->toArray(), null, 'A2');
@@ -55,9 +76,8 @@ class DataExportToCsv {
         // Create a writer
         $writer = new Xls($spreadsheet);
 
-
         // Save the file
-        $name = 'facility_' . now()->format('YmdHis') . '.xls';
+        $name = 'einrichtungen_' . now()->format('YmdHis') . '.xls';
         $xlsPath = storage_path('app/exports/' . $name);
         $writer->save($xlsPath);
 
@@ -80,12 +100,15 @@ class DataExportToCsv {
 
         $contacts = $contacts->map(function ($contact) {
             $contact['contact_facility'] = $contact->facilities?->pluck('name')->join(', ') ?: 'N/A';
-            $contact['contact_branches'] = $contact->branches?->pluck('name')->join(', ') ?: 'N/A';
+            // $contact['contact_branches'] = $contact->branches?->pluck('name')->join(', ') ?: 'N/A';
             $contact['contact_user'] = $contact->user?->fullName() ?: 'N/A';
             $contact['contact_position'] = $contact->position?->name ?: 'N/A';
 
             unset($contact['id']);
             unset($contact['facilities']);
+            unset($contact['contact_branches']);
+            unset($contact['recieve_promotional_emails']);
+            unset($contact['branches']);
             unset($contact['user']);
             unset($contact['position']);
 
@@ -100,7 +123,30 @@ class DataExportToCsv {
         $spreadsheet = new Spreadsheet();
 
         // Set the column headers
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($contacts->first()->toArray()), null, 'A1');
+        $spreadsheet->getActiveSheet()->fromArray(
+            [
+                'Vorname',
+                'Nachname',
+                'Telefon',
+                'Mobil',
+                'Straße',
+                'Hausnummer',
+                'Postleitzahl',
+                'Ort',
+                'Benutzer-ID',
+                'Status',
+                'wurde gelöscht',
+                'gelöscht am',
+                'erstellt am',
+                'update am',
+                'Position',
+                'Intern',
+                'Anrede',
+                'E-Mail Adresse',
+                'Einrichtung',
+                'Zugewiesener Benutzer',
+                'Position',
+            ], null, 'A1');
 
         // Set the data starting from the second row
         $spreadsheet->getActiveSheet()->fromArray($contacts->toArray(), null, 'A2');
@@ -109,7 +155,7 @@ class DataExportToCsv {
         $writer = new Xls($spreadsheet);
 
         // Create a CSV file
-        $name = 'contact_' . now()->format('YmdHis') . '.xls';
+        $name = 'kontakt_' . now()->format('YmdHis') . '.xls';
         $xlsPath = storage_path('app/exports/' . $name);
         $writer->save($xlsPath);
 
@@ -147,7 +193,18 @@ class DataExportToCsv {
         $spreadsheet = new Spreadsheet();
 
         // Set the column headers
-        $spreadsheet->getActiveSheet()->fromArray(array_keys($products->first()->toArray()), null, 'A1');
+        $spreadsheet->getActiveSheet()->fromArray([
+            'Produktname',
+            'Umfang',
+            'Unterrichtsart',
+            'Preis',
+            'Beschreibung',
+            'status',
+            'wurde gelöscht',
+            'gelöscht am',
+            'erstellt am',
+            'update am',
+        ], null, 'A1');
 
         // Set the data starting from the second row
         $spreadsheet->getActiveSheet()->fromArray($products->toArray(), null, 'A2');
