@@ -63,7 +63,7 @@ class Contact extends Component
         {
             $this->status = StatusEnum::PENDING->value;
             $this->assign_to = auth()->user()->id;
-            $this->position = $this->positions->first()?->id;
+            $this->position = '';
             $this->salutation = SalutationEnum::NONE->value;
             $this->fillInputs();
         } else {
@@ -127,8 +127,8 @@ class Contact extends Component
     {
 
         $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
+            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
@@ -193,8 +193,8 @@ class Contact extends Component
     {
 
         $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)->ignore($this->contact->id)],
+            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)->ignore($this->contact->id)],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
@@ -204,7 +204,7 @@ class Contact extends Component
             'location' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
-            'position' => 'required', 
+            'position' => 'required',
         ];
 
         $this->validate(array_merge($rules, $this->inputRules([

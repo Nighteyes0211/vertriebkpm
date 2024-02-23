@@ -8,6 +8,7 @@ use App\Models\Contact as ModelsContact;
 use App\Models\Position;
 use App\Models\User;
 use App\Traits\HasDynamicInput;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Contact extends Component
@@ -57,8 +58,8 @@ class Contact extends Component
     {
 
         $rules = [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
+            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed

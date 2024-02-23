@@ -18,7 +18,7 @@ class PositionSeeder extends Seeder
                 'name' => 'Pflegedienstleitung'
             ],
             [
-                'name' => 'Pflegedienstleitung'
+                'name' => 'Teilnehmer'
             ],
             [
                 'name' => 'Einrichtungsleitung'
