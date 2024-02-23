@@ -8,10 +8,10 @@
 
 
     <div class="d-flex gap-3">
-        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'facility']) }}">Einrichtungen exportieren</x-bootstrap.button>
-        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'contact']) }}">Kontakte exportieren</x-bootstrap.button>
-        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'product']) }}">Produkte exportieren</x-bootstrap.button>
-        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'appointment']) }}">Termine exportieren</x-bootstrap.button>
+        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'facility']) }}">Export Einrichtungen</x-bootstrap.button>
+        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'contact']) }}">Export Kontakte</x-bootstrap.button>
+        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'product']) }}">Export Produkt</x-bootstrap.button>
+        <x-bootstrap.button size="lg" href="{{ route('organization.export.data', ['data' => 'appointment']) }}">Export Termine</x-bootstrap.button>
     </div>
 
 </x-layouts.dashboard.app>
