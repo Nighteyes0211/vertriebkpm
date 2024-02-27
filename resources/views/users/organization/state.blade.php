@@ -1,8 +1,8 @@
-<x-layouts.dashboard.app title="Bundesländer">
+<x-layouts.dashboard.app title="Bundesländer ">
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Bundesländer</x-dayone.page.title>
+            <x-dayone.page.title>Bundesländer </x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 

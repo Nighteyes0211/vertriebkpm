@@ -1,8 +1,8 @@
-<x-layouts.dashboard.app title="Status für Einrichtungen">
+<x-layouts.dashboard.app title="Einrichtungsstatus">
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Status für Einrichtungen</x-dayone.page.title>
+            <x-dayone.page.title>Einrichtungsstatus</x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 

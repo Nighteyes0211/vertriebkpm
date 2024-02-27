@@ -1,8 +1,8 @@
-<x-layouts.dashboard.app title="Einrichtungstyp">
+<x-layouts.dashboard.app title="Einrichtungstyp ">
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Einrichtungstyp</x-dayone.page.title>
+            <x-dayone.page.title>Einrichtungstyp </x-dayone.page.title>
         </x-slot>
         <x-slot name="right">
 

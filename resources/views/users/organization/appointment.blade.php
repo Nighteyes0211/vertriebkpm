@@ -1,8 +1,8 @@
-<x-layouts.dashboard.app title="Termin">
+<x-layouts.dashboard.app title="Termine">
 
     <x-dayone.page.header>
         <x-slot name="left">
-            <x-dayone.page.title>Termin</x-dayone.page.title>
+            <x-dayone.page.title>Termine</x-dayone.page.title>
         </x-slot>
 
     </x-dayone.page.header>
