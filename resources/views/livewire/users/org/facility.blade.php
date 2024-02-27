@@ -68,16 +68,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="facility_modalTitleId">
-                        Product
+                        Produkt
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
                 <x-bootstrap.form method="addProduct">
                     <div class="modal-body">
 
                         <div>
                             <div wire:ignore>
-                                <x-bootstrap.form.select name="product" class="sumoselect" label="Product">
+                                <x-bootstrap.form.select name="product" class="sumoselect" label="Produkt">
                                     <option value="" disabled selected>Bitte auswählen</option>
                                     @foreach ($products as $singleProduct)
                                         <option value="{{ $singleProduct->id }}">{{ $singleProduct->name }}</option>
@@ -214,7 +214,7 @@
             <div>
                 <div wire:ignore>
                     <p>Wählen Sie einen bestehenden Kontakt, indem Sie ins Eingabefeld klicken. Geben Sie den Namen über die Tastatur ein.</p>
-                    <p>Klicken Sie auf den Button "Kontakt erstellen", um die Kontaktperson anzulegen.</p> 
+                    <p>Klicken Sie auf den Button "Kontakt erstellen", um die Kontaktperson anzulegen. </p> 
                     <x-bootstrap.form.select name="contact"  label="Kontakt" multiple>
                         @foreach ($contacts as $singleContact)
                             <option {{ in_array($singleContact->id, $facility?->contacts?->pluck('id')->toArray() ?: []) ? 'selected' : '' }} value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
