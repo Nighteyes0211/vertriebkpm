@@ -1,13 +1,26 @@
 <div>
+
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="create_contact_modal" tabindex="-1" role="dialog"
         aria-labelledby="create_contact_modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="create_contact_modalTitleId">
-                        Telefontermin erstellen
-                    </h5>
+                    <div class="w-100 flex-column">
+                        <h5 class="modal-title" id="create_contact_modalTitleId">
+                            Telefontermin erstellen
+                        </h5>
+
+                        @if ($show_duplicate_message)
+                            <div class="d-flex w-100 justify-content-between align-items-center mt-5">
+                                <p class="mb-0 text-danger">This customer already exists. Still want to create?</p>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-danger btn-sm"  data-bs-dismiss="modal" aria-label="Close">No</button>
+                                    <button class="btn btn-primary btn-sm" wire:click="storeDuplicateContact">Yes</button>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <x-bootstrap.form method="store">

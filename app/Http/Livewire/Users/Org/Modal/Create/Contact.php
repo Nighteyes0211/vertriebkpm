@@ -8,6 +8,7 @@ use App\Models\Contact as ModelsContact;
 use App\Models\Position;
 use App\Models\User;
 use App\Traits\HasDynamicInput;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -26,6 +27,15 @@ class Contact extends Component
      */
     public $first_name, $last_name, $email, $telephone, $mobile, $street, $house_number, $zip_code, $location, $position, $status, $notes, $is_internal = true, $salutation, $assign_to, $recieve_promotional_emails = false;
 
+    /**
+     * Fields
+     */
+    public $allow_duplicate_contact = false, $show_duplicate_message = false;
+
+    /**
+     * Listener
+     */
+    public $listeners = ['contactDuplicationConfirmed' => 'storeDuplicateContact'];
 
     public function mount()
     {
@@ -54,12 +64,19 @@ class Contact extends Component
         return view('livewire.users.org.modal.create.contact');
     }
 
+    public function storeDuplicateContact()
+    {
+        $this->allow_duplicate_contact = true;
+        $this->show_duplicate_message = false;
+        $this->store();
+    }
+
     public function store()
     {
 
         $rules = [
-            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
-            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
@@ -69,7 +86,7 @@ class Contact extends Component
             'location' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:255',
             'assign_to' => 'required', // Ensure the assigned user exists in the users table
-            'position' => 'required', // Ensure the assigned position exists in the positions table
+            'position' => 'required',
         ];
 
         $this->validate(
@@ -79,6 +96,24 @@ class Contact extends Component
                 ]
             ]))
         );
+
+        $contactValidator = Validator::make(
+            [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+            ],
+            [
+                'first_name' => [Rule::unique('contacts')->where('last_name', $this->last_name)->where('is_deleted', 0)],
+                'last_name' => [Rule::unique('contacts')->where('first_name', $this->first_name)->where('is_deleted', 0)],
+            ]
+        );
+
+
+        if ($contactValidator->fails() && $this->allow_duplicate_contact == false)
+        {
+            $this->show_duplicate_message = true;
+            return;
+        }
 
         $contact = ModelsContact::create([
             'first_name' => $this->first_name,
@@ -107,6 +142,8 @@ class Contact extends Component
             }
         }
 
+        $this->allow_duplicate_contact = false;
+        $this->show_duplicate_message = false;
         $this->emit('closeModal', 'create_contact_modal');
         $this->emit('contactCreated', $contact);
     }

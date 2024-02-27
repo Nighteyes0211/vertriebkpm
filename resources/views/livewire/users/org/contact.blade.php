@@ -1,52 +1,9 @@
 <div>
 
-    {{-- Product --}}
-    <!-- <div wire:ignore.self class="modal fade" id="product_modal" tabindex="-1" role="dialog"
-    aria-labelledby="product_modalTitleId" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="product_modalTitleId">
-                          Product
-                      </h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <x-bootstrap.form method="addProduct">
-                      <div class="modal-body">
-
-                          <div>
-                              <div wire:ignore>
-                                  <x-bootstrap.form.select name="product" class="sumoselect" label="Product">
-                                      @foreach ($products as $singleProduct)
-                                          <option value="{{ $singleProduct->id }}">{{ $singleProduct->name }}</option>
-                                      @endforeach
-                                  </x-bootstrap.form.select>
-                              </div>
-
-
-                              <div class="row">
-                                  <div class="col-12 col-md-3 col-lg-3"></div>
-                                  <div class="col-sm-12 col-md-7">
-                                      @error($product)
-                                          <p class="text-danger small">{{ $message }}</p>
-                                      @enderror
-                                  </div>
-                              </div>
-                          </div>
-
-                          <x-bootstrap.form.input type="number" name="product_quantity" label="Product Quantity" />
-
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                              Close
-                          </button>
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
-                  </x-bootstrap.form>
-              </div>
-          </div>
-      </div> -->
+    @php
+        $contactDuplicationMessage = $mode == PageModeEnum::CREATE ? 'This customer already exists. Still want to create?' : 'This customer already exists. Do you want to continue?'
+    @endphp
+    @livewire('users.org.modal.confirm', ['message' => $contactDuplicationMessage, 'confirmationEvent' => 'contactDuplicationConfirmed', 'eventListener' => 'contactDuplication'])
 
   <x-bootstrap.card>
       <x-bootstrap.form method="{{ $mode == PageModeEnum::EDIT ? 'edit' : 'store' }}">
@@ -151,7 +108,7 @@
                                   <button class="btn btn-danger" id="noteid-{{ $key }}-delete" type='button'
                                       wire:click="remove({{ $key }}, 'notes')">Löschen</button>
                               @endif
-                              <p class="mb-0">{{ isset($singleNote['created_by']) ? $singleNote['created_by'] . ' - ' . $singleNote['created_at'] : ''  }}</p>
+                              <p class="mb-0">{{ isset($note['created_by']) ? $note['created_by'] . ' - ' . $note['created_at'] : ''  }}</p>
                           </div>
                       </div>
                   </x-bootstrap.form.textarea>

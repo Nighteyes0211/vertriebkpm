@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Traits\HasDynamicInput;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -41,6 +42,16 @@ class Contact extends Component
     // Productable
     public $product, $product_quantity = 1;
     public $contact_products = [];
+
+    /**
+     * Fields
+     */
+    public $allow_duplicate_contact = false;
+
+    /**
+     * Listener
+     */
+    public $listeners = ['contactDuplicationConfirmed' => 'storeDuplicateContact'];
 
     public function mount()
     {
@@ -76,7 +87,7 @@ class Contact extends Component
             $this->house_number = $this->contact->house_number;
             $this->zip_code = $this->contact->zip_code;
             $this->location = $this->contact->location;
-            $this->position = $this->contact->position_id ?: $this->positions->first()?->id;
+            $this->position = $this->contact->position_id;
             $this->status = $this->contact->status;
             // $this->notes = $this->contact->notes;
             $this->is_internal = $this->contact->is_internal;
@@ -123,12 +134,23 @@ class Contact extends Component
         return view('livewire.users.org.contact');
     }
 
+    public function storeDuplicateContact()
+    {
+        $this->allow_duplicate_contact = true;
+        if ($this->mode == PageModeEnum::CREATE)
+        {
+            $this->store();
+        } else {
+            $this->edit();
+        }
+    }
+
     public function store()
     {
 
         $rules = [
-            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
-            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
@@ -148,6 +170,25 @@ class Contact extends Component
                 ]
             ]))
         );
+
+        $contactValidator = Validator::make(
+            [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+            ],
+            [
+                'first_name' => [Rule::unique('contacts')->where('last_name', $this->last_name)->where('is_deleted', 0)],
+                'last_name' => [Rule::unique('contacts')->where('first_name', $this->first_name)->where('is_deleted', 0)],
+            ]
+        );
+
+        if ($contactValidator->fails() && $this->allow_duplicate_contact == false)
+        {
+            $this->emit('contactDuplication', []);
+            return;
+        }
+
+
 
         $contact = ModelsContact::create([
             'first_name' => $this->first_name,
@@ -193,8 +234,8 @@ class Contact extends Component
     {
 
         $rules = [
-            'first_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)->ignore($this->contact->id)],
-            'last_name' => ['required', 'string', 'max:255', Rule::unique('contacts')->where('is_deleted', 0)->ignore($this->contact->id)],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => 'required|email',
             'telephone' => 'nullable|string|max:20', // Adjust max length as needed
             'mobile' => 'nullable|string|max:20', // Adjust max length as needed
@@ -212,6 +253,25 @@ class Contact extends Component
                 'note' => ['nullable', 'max:3000']
             ]
         ])));
+
+
+        $contactValidator = Validator::make(
+            [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+            ],
+            [
+                'first_name' => [Rule::unique('contacts')->where('last_name', $this->last_name)->where('is_deleted', 0)->ignore($this->contact->id)],
+                'last_name' => [Rule::unique('contacts')->where('first_name', $this->first_name)->where('is_deleted', 0)->ignore($this->contact->id)],
+            ]
+        );
+
+        if ($contactValidator->fails() && $this->allow_duplicate_contact == false)
+        {
+            $this->emit('contactDuplication', []);
+            return;
+        }
+
 
         $this->contact->update([
             'first_name' => $this->first_name,

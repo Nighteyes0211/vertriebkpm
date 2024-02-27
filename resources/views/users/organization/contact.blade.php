@@ -10,9 +10,9 @@
                 @if (PageModeEnum::INDEX == $mode)
                     <x-dayone.action.btn action="contact:create" title="Add new Contact" iconClass="feather-plus"
                         href="{{ route('organization.contact.create') }}"></x-dayone.action.btn>
-                @else
+                {{-- @else
                     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#product_modal">Produkt hinzufügen</button>
+                        data-bs-target="#product_modal">Produkt hinzufügen</button> --}}
                 @endif
             </x-dayone.action.list>
 
