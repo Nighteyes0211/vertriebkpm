@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Facility">
+<x-layouts.dashboard.app title="Einrichtungen">
 
     <x-dayone.page.header>
         <x-slot name="left">

@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Contact">
+<x-layouts.dashboard.app title="Kontakte">
 
     <x-dayone.page.header>
         <x-slot name="left">
@@ -12,7 +12,7 @@
                         href="{{ route('organization.contact.create') }}"></x-dayone.action.btn>
                 @else
                     <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-                        data-bs-target="#product_modal">Add Product</button>
+                        data-bs-target="#product_modal">Produkt hinzufügen</button>
                 @endif
             </x-dayone.action.list>
 

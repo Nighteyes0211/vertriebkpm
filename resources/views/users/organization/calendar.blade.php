@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Calendar">
+<x-layouts.dashboard.app title="Kalender">
 
     <x-dayone.page.header>
         <x-slot name="left">

@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Role">
+<x-layouts.dashboard.app title="Rollen">
 
     <x-dayone.page.header>
         <x-slot name="left">

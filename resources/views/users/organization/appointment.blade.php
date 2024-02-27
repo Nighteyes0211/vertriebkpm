@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Appointment">
+<x-layouts.dashboard.app title="Termin">
 
     <x-dayone.page.header>
         <x-slot name="left">

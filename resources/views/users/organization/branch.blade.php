@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Branch">
+<x-layouts.dashboard.app title="Niederlassung">
 
     <x-dayone.page.header>
         <x-slot name="left">

@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Profile">
+<x-layouts.dashboard.app title="Profil">
 
     <x-dayone.page.header>
         <x-slot name="left">

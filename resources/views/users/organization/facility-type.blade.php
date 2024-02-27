@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Facility-type">
+<x-layouts.dashboard.app title="Einrichtungstyp">
 
     <x-dayone.page.header>
         <x-slot name="left">

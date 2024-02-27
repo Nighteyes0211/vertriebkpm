@@ -1,4 +1,4 @@
-<x-layouts.dashboard.app title="Facility-status">
+<x-layouts.dashboard.app title="Status für Einrichtungen">
 
     <x-dayone.page.header>
         <x-slot name="left">
