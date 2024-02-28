@@ -56,7 +56,7 @@ class Contact extends Component
     public function mount()
     {
         $this->users = User::active()->available()->get();
-        $this->positions = Position::active()->available()->get();
+        $this->positions = Position::active()->orderBy('name', 'asc')->available()->get();
         $this->products = Product::active()->available()->get();
         $this->product = $this->products->first()?->id;
 
@@ -303,16 +303,13 @@ class Contact extends Component
         }
 
         foreach ($this->inputs['notes'] as $note) {
-            if ($note['note'])
-            {
-                $this->contact->notes()->updateOrCreate(
-                    [
-                        'id' => $note['id']
-                    ],
-                    [
-                    'text' => $note['note']
-                ]);
-            }
+            $this->contact->notes()->updateOrCreate(
+                [
+                    'id' => $note['id']
+                ],
+                [
+                'text' => $note['note']
+            ]);
         }
 
 

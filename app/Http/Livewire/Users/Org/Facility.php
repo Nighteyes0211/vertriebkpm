@@ -68,7 +68,7 @@ class Facility extends Component
     public function mount()
     {
 
-        $this->facility_types = FacilityType::available()->get();
+        $this->facility_types = FacilityType::available()->orderBy('name')->get();
         // $this->contacts = Contact::available()->when(auth()->user()->is_internal == false, fn($query) => $query->where('is_internal', false))->get();
         $this->contacts = Contact::available()->get();
         $this->users = User::active()->available()->get();
@@ -137,6 +137,7 @@ class Facility extends Component
                 'lesson_type' => $product->product->lesson_type,
                 'price' => $product->product->price,
                 'quantity' => $product->quantity,
+                'created_at' => parseDate($product->created_at, 'd/m/Y H:i')
             ])->toArray() ?: [];
 
         } else {
@@ -330,16 +331,13 @@ class Facility extends Component
         }
 
         foreach ($this->inputs['notes'] as $note) {
-            if ($note['note'])
-            {
-                $this->facility->notes()->updateOrCreate(
-                    [
-                        'id' => $note['id']
-                    ],
-                    [
-                    'text' => $note['note']
-                ]);
-            }
+            $this->facility->notes()->updateOrCreate(
+                [
+                    'id' => $note['id']
+                ],
+                [
+                'text' => $note['note']
+            ]);
         }
         $this->facility->statuses()->sync($this->status);
 
@@ -390,6 +388,7 @@ class Facility extends Component
             'lesson_type' => $product->lesson_type,
             'price' => $product->price,
             'quantity' => $this->product_quantity,
+            'created_at' => parseDate($product->created_at, 'd/m/Y H:i'),
         ];
 
         $this->reset('product_quantity');

@@ -178,6 +178,7 @@
                                 <th>Unterrichtsart</th>
                                 <th>Preis</th>
                                 <th>Anzahl</th>
+                                <th>Added at</th>
                                 <th>Aktion</th>
                             </tr>
                         </thead>
@@ -190,6 +191,7 @@
                                     <td>{{ $singleProduct['lesson_type'] }}</td>
                                     <td>{{ $singleProduct['price'] }}</td>
                                     <td>{{ $singleProduct['quantity'] }}</td>
+                                    <td>{{ $singleProduct['created_at'] }}</td>
                                     <td>
                                         <button type="button" wire:loading.class="disabled" wire:target="removeProduct({{ $key }})"
                                             href="javascript:void(0);"
@@ -214,7 +216,7 @@
             <div>
                 <div wire:ignore>
                     <p>Wählen Sie einen bestehenden Kontakt, indem Sie ins Eingabefeld klicken. Geben Sie den Namen über die Tastatur ein.</p>
-                    <p>Klicken Sie auf den Button "Kontakt erstellen", um die Kontaktperson anzulegen. </p> 
+                    <p>Klicken Sie auf den Button "Kontakt erstellen", um die Kontaktperson anzulegen. </p>
                     <x-bootstrap.form.select name="contact"  label="Kontakt" multiple>
                         @foreach ($contacts as $singleContact)
                             <option {{ in_array($singleContact->id, $facility?->contacts?->pluck('id')->toArray() ?: []) ? 'selected' : '' }} value="{{ $singleContact->id }}">{{ $singleContact->fullName() }}</option>
