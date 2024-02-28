@@ -19,7 +19,7 @@ class FacilityType extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setAdditionalSelects(['facility_types.id as id']);
-        $this->setDefaultSort('facility_types.created_at', 'desc');
+        $this->setDefaultSort('facility_types.name', 'asc');
     }
 
     public function builder(): Builder

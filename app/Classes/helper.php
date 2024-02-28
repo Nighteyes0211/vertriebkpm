@@ -127,7 +127,7 @@ function truncateWithEllipsis(string $string, int $maxLength) {
  * @param string $format = "Y-m-d"
  */
 
-function parseDate(string $date, string $format = "F j, Y")
+function parseDate(string $date, string $format = "d/m/Y")
 {
 
     // Format date

@@ -66,8 +66,8 @@ class DashboardController extends Controller
                 'facilities' => $appointment->contact?->facilities->pluck('name')->join(', ') ?: 'N/A',
                 'status' => StatusEnum::tryFrom($appointment->status)->label(),
                 'status_class' => $appointment->status == StatusEnum::PENDING->value ? 'badge bg-warning' : 'badge bg-success',
-                'appointment_start_time' => parseDate($appointment->start_date, 'M j, Y h:i A'),
-                'appointment_end_time' => parseDate($appointment->end_date, 'M j, Y h:i A'),
+                'appointment_start_time' => parseDate($appointment->start_date, 'd/m/Y H:i'),
+                'appointment_end_time' => parseDate($appointment->end_date, 'd/m/Y H:i'),
                 'user' => $appointment->user->fullName()
             ];
         });
