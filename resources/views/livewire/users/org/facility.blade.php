@@ -178,7 +178,7 @@
                                 <th>Unterrichtsart</th>
                                 <th>Preis</th>
                                 <th>Anzahl</th>
-                                <th>Added at</th>
+                                <th>Gebucht am</th>
                                 <th>Aktion</th>
                             </tr>
                         </thead>
