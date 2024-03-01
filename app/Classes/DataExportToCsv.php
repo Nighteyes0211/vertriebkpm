@@ -23,6 +23,18 @@ class DataExportToCsv {
             $facility['facility_type'] = $facility->type?->name ?: 'N/A';
             $facility['facility_state'] = $facility->state?->name ?: 'N/A';
             $facility['facility_statuses'] = $facility->statuses?->pluck('name')->join(', ') ?: 'N/A';
+
+            $facility['facility_products'] = null;
+            if ($facility->products)
+            {
+                foreach ($facility->products as $product)
+                {
+                    $facility['facility_products'] .= $product->product->name . "\n" . $product->quantity . "\n" . '€' . ($product->product->price ?: 0) . "\n" . parseDate($product->created_at) . "\n\n";
+                }
+            }
+
+            $facility['facility_products'] = $facility['facility_products'] ?: 'N/A';
+
             $facility['facility_contacts'] = $facility->contacts?->pluck('name')->join(', ') ?: 'N/A';
             $facility['facility_branches'] = $facility->branches?->pluck('name')->join(', ') ?: 'N/A';
 
@@ -33,6 +45,7 @@ class DataExportToCsv {
             unset($facility['statuses']);
             unset($facility['contacts']);
             unset($facility['branches']);
+            unset($facility['products']);
             unset($facility['facility_contacts']);
             unset($facility['state_id']);
             unset($facility['created_by']);
@@ -66,6 +79,7 @@ class DataExportToCsv {
                 'Einrichtungstyp',
                 'Bundesland',
                 'Einrichtungsstatus',
+                'Produkt',
                 'Mutterkonzern/Träger',
             ]
             , null, 'A1');
